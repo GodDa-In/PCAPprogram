@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <pcap.h>
 #include <arpa/inet.h>
-#include "myheader.h"
+#include "myheader.h" 
 
 // 패킷 캡처 콜백 함수
 void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet) {
@@ -62,16 +62,6 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
                 printf("Window Size: %d\n", ntohs(tcp->tcp_win));
                 printf("Checksum: %d\n", ntohs(tcp->tcp_sum));
                 printf("Urgent Pointer: %d\n\n", ntohs(tcp->tcp_urp));
-                break;
-            }
-            case IPPROTO_UDP: {
-                struct udpheader *udp = (struct udpheader *)(packet + sizeof(struct ethheader) + sizeof(struct ipheader));
-                // UDP 헤더 출력
-                printf("UDP Header:\n");
-                printf("Source Port: %d\n", ntohs(udp->udp_sport));
-                printf("Destination Port: %d\n", ntohs(udp->udp_dport));
-                printf("Length: %d\n", ntohs(udp->udp_ulen));
-                printf("Checksum: %d\n\n", ntohs(udp->udp_sum));
                 break;
             }
             case IPPROTO_ICMP: {
